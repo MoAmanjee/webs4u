@@ -250,7 +250,11 @@ export default function Home() {
                 <p>Full-featured online shopping platform</p>
               </div>
             </div>
-            <a href="https://alexmartinez-nu.vercel.app/" target="_blank" rel="noopener noreferrer" className="portfolio-item" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+            <div 
+              className="portfolio-item" 
+              style={{ cursor: 'pointer' }}
+              onClick={() => window.open('https://alexmartinez-nu.vercel.app/', '_blank', 'noopener,noreferrer')}
+            >
               <div className="portfolio-image">
                 <div className="portfolio-overlay">
                   <span className="portfolio-link">View Project →</span>
@@ -260,8 +264,12 @@ export default function Home() {
                 <h3>Portfolio Website</h3>
                 <p>Creative showcase for artists</p>
               </div>
-            </a>
-            <a href="https://taskflowpro-alpha.vercel.app/" target="_blank" rel="noopener noreferrer" className="portfolio-item" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+            </div>
+            <div 
+              className="portfolio-item" 
+              style={{ cursor: 'pointer' }}
+              onClick={() => window.open('https://taskflowpro-alpha.vercel.app/', '_blank', 'noopener,noreferrer')}
+            >
               <div className="portfolio-image">
                 <div className="portfolio-overlay">
                   <span className="portfolio-link">View Project →</span>
@@ -271,7 +279,7 @@ export default function Home() {
                 <h3>SaaS Landing Page</h3>
                 <p>High-converting product page</p>
               </div>
-            </a>
+            </div>
           </div>
         </div>
       </section>
