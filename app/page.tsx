@@ -76,40 +76,15 @@ export default function Home() {
           const result = await response.json();
 
           if (response.ok && result.success) {
-            // Open mailto link to send email
-            if (result.mailtoLink) {
-              window.location.href = result.mailtoLink;
-            }
-            alert('Thank you for your message! Your email client will open to send the message. We will get back to you within 24 hours.');
+            // Success! Show success message
+            alert('✓ Thank you! Your message has been sent successfully. We will get back to you within 24 hours.');
             contactForm.reset();
           } else {
-            // Fallback to mailto if API fails
-            const emailSubject = encodeURIComponent(`New Contact Form Submission from ${data.name}`);
-            const emailBody = encodeURIComponent(
-              `New contact form submission:\n\n` +
-              `Name: ${data.name}\n` +
-              `Email: ${data.email}\n` +
-              `Service: ${data.service}\n` +
-              `Budget: ${data.budget}\n\n` +
-              `Message:\n${data.message || 'No additional message provided.'}`
-            );
-            window.location.href = `mailto:prowebs4you@gmail.com?subject=${emailSubject}&body=${emailBody}`;
-            contactForm.reset();
+            alert(result.error || 'Failed to send message. Please try again or email us directly at prowebs4you@gmail.com');
           }
         } catch (error) {
           console.error('Error submitting form:', error);
-          // Fallback to mailto
-          const emailSubject = encodeURIComponent(`New Contact Form Submission from ${data.name}`);
-          const emailBody = encodeURIComponent(
-            `New contact form submission:\n\n` +
-            `Name: ${data.name}\n` +
-            `Email: ${data.email}\n` +
-            `Service: ${data.service}\n` +
-            `Budget: ${data.budget}\n\n` +
-            `Message:\n${data.message || 'No additional message provided.'}`
-          );
-          window.location.href = `mailto:prowebs4you@gmail.com?subject=${emailSubject}&body=${emailBody}`;
-          contactForm.reset();
+          alert('Failed to send message. Please try again or contact us directly at prowebs4you@gmail.com');
         }
       });
     }
