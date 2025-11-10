@@ -239,21 +239,39 @@ export default function Home() {
             <p>See what we've built for our clients</p>
           </div>
           <div className="portfolio-grid">
-            <div className="portfolio-item">
+            <a 
+              href="https://stylehub-lovat.vercel.app/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="portfolio-item" 
+              style={{ textDecoration: 'none', color: 'inherit', display: 'block', position: 'relative', zIndex: 1 }}
+              aria-label="View E-Commerce Store - StyleHub"
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open('https://stylehub-lovat.vercel.app/', '_blank', 'noopener,noreferrer');
+              }}
+            >
               <div className="portfolio-image">
                 <div className="portfolio-overlay">
-                  <a href="https://github.com/MoAmanjee" target="_blank" rel="noopener noreferrer" className="portfolio-link">View Project →</a>
+                  <span className="portfolio-link">View Project →</span>
                 </div>
               </div>
               <div className="portfolio-info">
                 <h3>E-Commerce Store</h3>
                 <p>Full-featured online shopping platform</p>
               </div>
-            </div>
-            <div 
+            </a>
+            <a 
+              href="https://alexmartinez-nu.vercel.app/" 
+              target="_blank" 
+              rel="noopener noreferrer"
               className="portfolio-item" 
-              style={{ cursor: 'pointer' }}
-              onClick={() => window.open('https://alexmartinez-nu.vercel.app/', '_blank', 'noopener,noreferrer')}
+              style={{ textDecoration: 'none', color: 'inherit', display: 'block', position: 'relative', zIndex: 1 }}
+              aria-label="View Portfolio Website - Alex Martinez"
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open('https://alexmartinez-nu.vercel.app/', '_blank', 'noopener,noreferrer');
+              }}
             >
               <div className="portfolio-image">
                 <div className="portfolio-overlay">
@@ -264,11 +282,18 @@ export default function Home() {
                 <h3>Portfolio Website</h3>
                 <p>Creative showcase for artists</p>
               </div>
-            </div>
-            <div 
+            </a>
+            <a 
+              href="https://taskflowpro-alpha.vercel.app/" 
+              target="_blank" 
+              rel="noopener noreferrer"
               className="portfolio-item" 
-              style={{ cursor: 'pointer' }}
-              onClick={() => window.open('https://taskflowpro-alpha.vercel.app/', '_blank', 'noopener,noreferrer')}
+              style={{ textDecoration: 'none', color: 'inherit', display: 'block', position: 'relative', zIndex: 1 }}
+              aria-label="View SaaS Landing Page - TaskFlow Pro"
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open('https://taskflowpro-alpha.vercel.app/', '_blank', 'noopener,noreferrer');
+              }}
             >
               <div className="portfolio-image">
                 <div className="portfolio-overlay">
@@ -279,7 +304,7 @@ export default function Home() {
                 <h3>SaaS Landing Page</h3>
                 <p>High-converting product page</p>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </section>

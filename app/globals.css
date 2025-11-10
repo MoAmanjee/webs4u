@@ -298,6 +298,17 @@ html {
   overflow: hidden;
   box-shadow: var(--shadow-md);
   transition: all 0.3s;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+a.portfolio-item {
+  cursor: pointer !important;
+  pointer-events: auto !important;
 }
 
 .portfolio-item:hover {
@@ -324,6 +335,7 @@ html {
   justify-content: center;
   opacity: 0;
   transition: opacity 0.3s;
+  pointer-events: none;
 }
 
 .portfolio-item:hover .portfolio-overlay {
