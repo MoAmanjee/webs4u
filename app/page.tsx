@@ -58,6 +58,8 @@ export default function Home() {
         e.preventDefault();
         const formData = new FormData(contactForm);
         const data = Object.fromEntries(formData);
+        const needsHostingCheckbox = contactForm.querySelector('#needsHosting') as HTMLInputElement;
+        const needsHosting = needsHostingCheckbox?.checked || false;
         
         try {
           const response = await fetch('/api/contact', {
@@ -66,11 +68,11 @@ export default function Home() {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              name: data.name,
-              email: data.email,
-              businessType: data.service,
-              needsHosting: data.needsHosting === 'on' || data.needsHosting === true,
-              message: `Service Needed: ${data.service}\nBudget: ${data.budget}\n\n${data.message || 'No additional message provided.'}`,
+              name: String(data.name || ''),
+              email: String(data.email || ''),
+              businessType: String(data.service || ''),
+              needsHosting: needsHosting,
+              message: `Service Needed: ${data.service || ''}\nBudget: ${data.budget || ''}\n\n${data.message || 'No additional message provided.'}`,
             }),
           });
 
@@ -85,14 +87,14 @@ export default function Home() {
             contactForm.reset();
           } else {
             // Fallback to mailto if API fails
-            const emailSubject = encodeURIComponent(`New Contact Form Submission from ${data.name}`);
-            const hostingNote = (data.needsHosting === 'on' || data.needsHosting === true) ? '\nHosting Requested: Yes - Client wants Webs4U to host their website.' : '\nHosting Requested: No';
+            const emailSubject = encodeURIComponent(`New Contact Form Submission from ${data.name || ''}`);
+            const hostingNote = needsHosting ? '\nHosting Requested: Yes - Client wants Webs4U to host their website.' : '\nHosting Requested: No';
             const emailBody = encodeURIComponent(
               `New contact form submission:\n\n` +
-              `Name: ${data.name}\n` +
-              `Email: ${data.email}\n` +
-              `Service: ${data.service}\n` +
-              `Budget: ${data.budget}` +
+              `Name: ${data.name || ''}\n` +
+              `Email: ${data.email || ''}\n` +
+              `Service: ${data.service || ''}\n` +
+              `Budget: ${data.budget || ''}` +
               hostingNote + `\n\n` +
               `Message:\n${data.message || 'No additional message provided.'}`
             );
@@ -102,14 +104,14 @@ export default function Home() {
         } catch (error) {
           console.error('Error submitting form:', error);
           // Fallback to mailto
-          const emailSubject = encodeURIComponent(`New Contact Form Submission from ${data.name}`);
-          const hostingNote = (data.needsHosting === 'on' || data.needsHosting === true) ? '\nHosting Requested: Yes - Client wants Webs4U to host their website.' : '\nHosting Requested: No';
+          const emailSubject = encodeURIComponent(`New Contact Form Submission from ${data.name || ''}`);
+          const hostingNote = needsHosting ? '\nHosting Requested: Yes - Client wants Webs4U to host their website.' : '\nHosting Requested: No';
           const emailBody = encodeURIComponent(
             `New contact form submission:\n\n` +
-            `Name: ${data.name}\n` +
-            `Email: ${data.email}\n` +
-            `Service: ${data.service}\n` +
-            `Budget: ${data.budget}` +
+            `Name: ${data.name || ''}\n` +
+            `Email: ${data.email || ''}\n` +
+            `Service: ${data.service || ''}\n` +
+            `Budget: ${data.budget || ''}` +
             hostingNote + `\n\n` +
             `Message:\n${data.message || 'No additional message provided.'}`
           );
@@ -245,13 +247,7 @@ export default function Home() {
               target="_blank" 
               rel="noopener noreferrer"
               className="portfolio-item" 
-              style={{ textDecoration: 'none', color: 'inherit', display: 'block', position: 'relative', zIndex: 1 }}
               aria-label="View E-Commerce Store - StyleHub"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                window.open('https://stylehub-lovat.vercel.app/', '_blank', 'noopener,noreferrer');
-              }}
             >
               <div className="portfolio-image">
                 <div className="portfolio-overlay">
@@ -268,13 +264,7 @@ export default function Home() {
               target="_blank" 
               rel="noopener noreferrer"
               className="portfolio-item" 
-              style={{ textDecoration: 'none', color: 'inherit', display: 'block', position: 'relative', zIndex: 1 }}
               aria-label="View Portfolio Website - Alex Martinez"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                window.open('https://alexmartinez-nu.vercel.app/', '_blank', 'noopener,noreferrer');
-              }}
             >
               <div className="portfolio-image">
                 <div className="portfolio-overlay">
@@ -291,13 +281,7 @@ export default function Home() {
               target="_blank" 
               rel="noopener noreferrer"
               className="portfolio-item" 
-              style={{ textDecoration: 'none', color: 'inherit', display: 'block', position: 'relative', zIndex: 1 }}
               aria-label="View SaaS Landing Page - TaskFlow Pro"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                window.open('https://taskflowpro-alpha.vercel.app/', '_blank', 'noopener,noreferrer');
-              }}
             >
               <div className="portfolio-image">
                 <div className="portfolio-overlay">
