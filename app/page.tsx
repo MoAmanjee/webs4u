@@ -69,6 +69,7 @@ export default function Home() {
               name: data.name,
               email: data.email,
               businessType: data.service,
+              needsHosting: data.needsHosting === 'on' || data.needsHosting === true,
               message: `Service Needed: ${data.service}\nBudget: ${data.budget}\n\n${data.message || 'No additional message provided.'}`,
             }),
           });
@@ -85,12 +86,14 @@ export default function Home() {
           } else {
             // Fallback to mailto if API fails
             const emailSubject = encodeURIComponent(`New Contact Form Submission from ${data.name}`);
+            const hostingNote = (data.needsHosting === 'on' || data.needsHosting === true) ? '\nHosting Requested: Yes - Client wants Webs4U to host their website.' : '\nHosting Requested: No';
             const emailBody = encodeURIComponent(
               `New contact form submission:\n\n` +
               `Name: ${data.name}\n` +
               `Email: ${data.email}\n` +
               `Service: ${data.service}\n` +
-              `Budget: ${data.budget}\n\n` +
+              `Budget: ${data.budget}` +
+              hostingNote + `\n\n` +
               `Message:\n${data.message || 'No additional message provided.'}`
             );
             window.location.href = `mailto:prowebs4you@gmail.com?subject=${emailSubject}&body=${emailBody}`;
@@ -100,12 +103,14 @@ export default function Home() {
           console.error('Error submitting form:', error);
           // Fallback to mailto
           const emailSubject = encodeURIComponent(`New Contact Form Submission from ${data.name}`);
+          const hostingNote = (data.needsHosting === 'on' || data.needsHosting === true) ? '\nHosting Requested: Yes - Client wants Webs4U to host their website.' : '\nHosting Requested: No';
           const emailBody = encodeURIComponent(
             `New contact form submission:\n\n` +
             `Name: ${data.name}\n` +
             `Email: ${data.email}\n` +
             `Service: ${data.service}\n` +
-            `Budget: ${data.budget}\n\n` +
+            `Budget: ${data.budget}` +
+            hostingNote + `\n\n` +
             `Message:\n${data.message || 'No additional message provided.'}`
           );
           window.location.href = `mailto:prowebs4you@gmail.com?subject=${emailSubject}&body=${emailBody}`;
@@ -248,7 +253,7 @@ export default function Home() {
             <div className="portfolio-item">
               <div className="portfolio-image">
                 <div className="portfolio-overlay">
-                  <a href="https://github.com/MoAmanjee" target="_blank" rel="noopener noreferrer" className="portfolio-link">View Project →</a>
+                  <a href="https://moamanjee.github.io/portfolio_web/" target="_blank" rel="noopener noreferrer" className="portfolio-link">View Project →</a>
                 </div>
               </div>
               <div className="portfolio-info">
@@ -408,6 +413,20 @@ export default function Home() {
               <div className="form-group">
                 <label htmlFor="message">Project Details</label>
                 <textarea id="message" name="message" rows={5} required></textarea>
+              </div>
+              <div className="form-group" style={{ background: '#f9fafb', padding: '1rem', borderRadius: '0.5rem', border: '2px solid #e5e7eb' }}>
+                <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', marginBottom: '0.5rem' }}>
+                  <input 
+                    type="checkbox" 
+                    id="needsHosting" 
+                    name="needsHosting" 
+                    style={{ width: '1.25rem', height: '1.25rem', marginRight: '0.75rem', cursor: 'pointer' }}
+                  />
+                  <span style={{ fontWeight: '600', color: '#0B1F3A' }}>I would like Webs4U to host my website</span>
+                </label>
+                <p style={{ fontSize: '0.875rem', color: '#6b7280', marginLeft: '2rem', marginTop: '0.5rem' }}>
+                  We offer reliable hosting plans starting from R150/month. <a href="/hosting" style={{ color: '#F4C542', textDecoration: 'underline' }}>View hosting options</a>
+                </p>
               </div>
               <button type="submit" className="btn btn-primary btn-block">Send Message</button>
             </form>

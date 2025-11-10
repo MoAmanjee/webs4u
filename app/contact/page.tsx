@@ -8,13 +8,16 @@ export default function Contact() {
     email: '',
     businessType: '',
     message: '',
+    needsHosting: false,
   });
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const target = e.target;
+    const value = target.type === 'checkbox' ? (target as HTMLInputElement).checked : target.value;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [target.name]: value,
     });
   };
 
@@ -27,7 +30,12 @@ export default function Contact() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          message: formData.needsHosting 
+            ? `${formData.message}\n\n---\nHosting Requested: Yes - Client wants Webs4U to host their website.`
+            : formData.message,
+        }),
       });
 
       const data = await response.json();
@@ -40,7 +48,7 @@ export default function Contact() {
         setSubmitted(true);
         setTimeout(() => {
           setSubmitted(false);
-          setFormData({ name: '', email: '', businessType: '', message: '' });
+          setFormData({ name: '', email: '', businessType: '', message: '', needsHosting: false });
         }, 5000);
       } else {
         alert('Failed to send message. Please try again or email us directly at prowebs4you@gmail.com');
@@ -60,7 +68,7 @@ export default function Contact() {
       setSubmitted(true);
       setTimeout(() => {
         setSubmitted(false);
-        setFormData({ name: '', email: '', businessType: '', message: '' });
+        setFormData({ name: '', email: '', businessType: '', message: '', needsHosting: false });
       }, 5000);
     }
   };
@@ -168,6 +176,24 @@ export default function Contact() {
                     className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-[#F4C542] focus:outline-none transition-colors resize-none"
                     placeholder="Tell us about your project..."
                   />
+                </div>
+
+                <div className="bg-gray-50 rounded-lg p-4 border-2 border-gray-200">
+                  <label className="flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      name="needsHosting"
+                      checked={formData.needsHosting}
+                      onChange={handleChange}
+                      className="w-5 h-5 text-[#F4C542] border-gray-300 rounded focus:ring-[#F4C542] focus:ring-2 cursor-pointer"
+                    />
+                    <span className="ml-3 text-[#0B1F3A] font-semibold">
+                      I would like Webs4U to host my website
+                    </span>
+                  </label>
+                  <p className="text-sm text-gray-600 mt-2 ml-8">
+                    We offer reliable hosting plans starting from R150/month. <a href="/hosting" className="text-[#F4C542] hover:underline">View hosting options</a>
+                  </p>
                 </div>
 
                 <button

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, businessType, message } = body;
+    const { name, email, businessType, message, needsHosting } = body;
 
     // Validate required fields
     if (!name || !email || !message) {
@@ -14,12 +14,14 @@ export async function POST(request: NextRequest) {
     }
 
     // Create email content
+    const hostingInfo = needsHosting ? `\nHosting Requested: Yes - Client wants Webs4U to host their website.` : `\nHosting Requested: No`;
     const emailSubject = encodeURIComponent(`New Contact Form Submission from ${name}`);
     const emailBody = encodeURIComponent(
       `New contact form submission:\n\n` +
       `Name: ${name}\n` +
       `Email: ${email}\n` +
-      `Business Type: ${businessType || 'Not specified'}\n\n` +
+      `Business Type: ${businessType || 'Not specified'}` +
+      hostingInfo + `\n\n` +
       `Message:\n${message}\n\n` +
       `---\n` +
       `This message was sent from the Webs4U contact form.`
