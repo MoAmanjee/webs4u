@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 
 export default function Hosting() {
   const hostingPlans = [
@@ -95,7 +97,9 @@ export default function Hosting() {
   ];
 
   return (
-    <div className="pt-16">
+    <>
+      <Navigation />
+      <div className="pt-16">
       {/* Header */}
       <section className="bg-gradient-to-br from-[#0B1F3A] to-[#1a3a5a] text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -308,7 +312,9 @@ export default function Hosting() {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+      <Footer />
+    </>
   );
 }
 
