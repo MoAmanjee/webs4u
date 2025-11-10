@@ -238,6 +238,7 @@ export default function Home() {
             <h2>Our Portfolio</h2>
             <p>See what we've built for our clients</p>
           </div>
+          {/* Portfolio items with correct links */}
           <div className="portfolio-grid">
             <a 
               href="https://stylehub-lovat.vercel.app/" 
