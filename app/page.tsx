@@ -250,17 +250,17 @@ export default function Home() {
                 <p>Full-featured online shopping platform</p>
               </div>
             </div>
-            <div className="portfolio-item">
+            <a href="https://moamanjee.github.io/portfolio_web/" target="_blank" rel="noopener noreferrer" className="portfolio-item" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
               <div className="portfolio-image">
                 <div className="portfolio-overlay">
-                  <a href="https://moamanjee.github.io/portfolio_web/" target="_blank" rel="noopener noreferrer" className="portfolio-link">View Project →</a>
+                  <span className="portfolio-link">View Project →</span>
                 </div>
               </div>
               <div className="portfolio-info">
                 <h3>Portfolio Website</h3>
                 <p>Creative showcase for artists</p>
               </div>
-            </div>
+            </a>
             <div className="portfolio-item">
               <div className="portfolio-image">
                 <div className="portfolio-overlay">
