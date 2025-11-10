@@ -261,17 +261,17 @@ export default function Home() {
                 <p>Creative showcase for artists</p>
               </div>
             </a>
-            <div className="portfolio-item">
+            <a href="https://taskflowpro-alpha.vercel.app/" target="_blank" rel="noopener noreferrer" className="portfolio-item" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
               <div className="portfolio-image">
                 <div className="portfolio-overlay">
-                  <a href="https://github.com/MoAmanjee" target="_blank" rel="noopener noreferrer" className="portfolio-link">View Project →</a>
+                  <span className="portfolio-link">View Project →</span>
                 </div>
               </div>
               <div className="portfolio-info">
                 <h3>SaaS Landing Page</h3>
                 <p>High-converting product page</p>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </section>
