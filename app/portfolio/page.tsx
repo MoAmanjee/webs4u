@@ -126,23 +126,19 @@ export default function Portfolio() {
                     </div>
 
                     <div className="flex flex-col gap-2">
-                      <a
-                        href={repo.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-[#0B1F3A] text-white px-4 py-2 rounded-lg text-center font-semibold hover:bg-[#0B1F3A]/90 transition-colors duration-200"
-                      >
-                        View Project
-                      </a>
-                      {repo.homepage && (
+                      {repo.homepage ? (
                         <a
                           href={repo.homepage}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="bg-transparent border-2 border-[#0B1F3A] text-[#0B1F3A] px-4 py-2 rounded-lg text-center font-semibold hover:bg-[#0B1F3A] hover:text-white transition-colors duration-200"
+                          className="bg-[#0B1F3A] text-white px-4 py-2 rounded-lg text-center font-semibold hover:bg-[#0B1F3A]/90 transition-colors duration-200"
                         >
-                          Live Demo
+                          View Project
                         </a>
+                      ) : (
+                        <span className="bg-gray-300 text-gray-600 px-4 py-2 rounded-lg text-center font-semibold cursor-not-allowed">
+                          View Project
+                        </span>
                       )}
                     </div>
 
