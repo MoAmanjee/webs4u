@@ -108,7 +108,7 @@ export default function About() {
                 {[
                   'React', 'Next.js', 'TypeScript', 'JavaScript',
                   'Tailwind CSS', 'Node.js', 'Express', 'MongoDB',
-                  'PostgreSQL', 'Git', 'GitHub', 'Vercel',
+                  'PostgreSQL', 'Git', 'Vercel',
                   'Netlify', 'Figma', 'Adobe XD', 'WordPress'
                 ].map((tech, index) => (
                   <span

@@ -54,7 +54,7 @@ export default function Portfolio() {
             My Portfolio
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Explore my GitHub projects and see examples of my work. Each project demonstrates my skills in web development, design, and problem-solving.
+            Explore my portfolio projects and see examples of my work. Each project demonstrates my skills in web development, design, and problem-solving.
           </p>
         </div>
       </section>
@@ -153,16 +153,6 @@ export default function Portfolio() {
                 ))}
               </div>
 
-              <div className="text-center mt-12">
-                <a
-                  href="https://github.com/MohammedAmanjeee"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block bg-[#0B1F3A] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#0B1F3A]/90 transition-colors duration-200"
-                >
-                  View All Projects on GitHub
-                </a>
-              </div>
             </>
           )}
         </div>
