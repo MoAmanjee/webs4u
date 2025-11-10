@@ -247,6 +247,7 @@ export default function Home() {
               style={{ textDecoration: 'none', color: 'inherit', display: 'block', position: 'relative', zIndex: 1 }}
               aria-label="View E-Commerce Store - StyleHub"
               onClick={(e) => {
+                e.preventDefault();
                 e.stopPropagation();
                 window.open('https://stylehub-lovat.vercel.app/', '_blank', 'noopener,noreferrer');
               }}
@@ -269,6 +270,7 @@ export default function Home() {
               style={{ textDecoration: 'none', color: 'inherit', display: 'block', position: 'relative', zIndex: 1 }}
               aria-label="View Portfolio Website - Alex Martinez"
               onClick={(e) => {
+                e.preventDefault();
                 e.stopPropagation();
                 window.open('https://alexmartinez-nu.vercel.app/', '_blank', 'noopener,noreferrer');
               }}
@@ -291,6 +293,7 @@ export default function Home() {
               style={{ textDecoration: 'none', color: 'inherit', display: 'block', position: 'relative', zIndex: 1 }}
               aria-label="View SaaS Landing Page - TaskFlow Pro"
               onClick={(e) => {
+                e.preventDefault();
                 e.stopPropagation();
                 window.open('https://taskflowpro-alpha.vercel.app/', '_blank', 'noopener,noreferrer');
               }}
@@ -495,7 +498,6 @@ export default function Home() {
             <div className="footer-section">
               <h4>Connect</h4>
               <div className="social-links">
-                <a href="https://github.com/MoAmanjee" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
                 <a href="mailto:Prowebs4you@gmail.com" aria-label="Email">Email</a>
                 <a href="tel:0608270838" aria-label="Phone">Phone</a>
               </div>
