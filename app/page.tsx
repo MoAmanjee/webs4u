@@ -250,7 +250,7 @@ export default function Home() {
                 <p>Full-featured online shopping platform</p>
               </div>
             </div>
-            <a href="https://moamanjee.github.io/portfolio_web/" target="_blank" rel="noopener noreferrer" className="portfolio-item" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+            <a href="https://alexmartinez-nu.vercel.app/" target="_blank" rel="noopener noreferrer" className="portfolio-item" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
               <div className="portfolio-image">
                 <div className="portfolio-overlay">
                   <span className="portfolio-link">View Project →</span>
