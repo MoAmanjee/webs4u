@@ -18,11 +18,8 @@ export default function Contact() {
     });
   };
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
     
     try {
       const response = await fetch('/api/contact', {
@@ -36,20 +33,35 @@ export default function Contact() {
       const data = await response.json();
 
       if (response.ok && data.success) {
-        // Success! Show success message
+        // Open mailto link to send email
+        if (data.mailtoLink) {
+          window.location.href = data.mailtoLink;
+        }
         setSubmitted(true);
-        setFormData({ name: '', email: '', businessType: '', message: '' });
         setTimeout(() => {
           setSubmitted(false);
-        }, 10000);
+          setFormData({ name: '', email: '', businessType: '', message: '' });
+        }, 5000);
       } else {
-        alert(data.error || 'Failed to send message. Please try again or email us directly at prowebs4you@gmail.com');
+        alert('Failed to send message. Please try again or email us directly at prowebs4you@gmail.com');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('Failed to send message. Please try again or contact us directly at prowebs4you@gmail.com');
-    } finally {
-      setIsSubmitting(false);
+      // Fallback to mailto if API fails
+      const emailSubject = encodeURIComponent(`New Contact Form Submission from ${formData.name}`);
+      const emailBody = encodeURIComponent(
+        `New contact form submission:\n\n` +
+        `Name: ${formData.name}\n` +
+        `Email: ${formData.email}\n` +
+        `Business Type: ${formData.businessType || 'Not specified'}\n\n` +
+        `Message:\n${formData.message}`
+      );
+      window.location.href = `mailto:prowebs4you@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({ name: '', email: '', businessType: '', message: '' });
+      }, 5000);
     }
   };
 
@@ -85,7 +97,7 @@ export default function Contact() {
               </h2>
               {submitted && (
                 <div className="bg-green-100 border-2 border-green-500 text-green-700 px-4 py-3 rounded-lg mb-6">
-                  ✓ Thank you! Your message has been sent successfully. We'll get back to you within 24 hours.
+                  Thank you! Your message has been received. We'll get back to you within 24 hours.
                 </div>
               )}
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -160,10 +172,9 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="w-full bg-[#0B1F3A] text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#0B1F3A]/90 transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  className="w-full bg-[#0B1F3A] text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-[#0B1F3A]/90 transition-all duration-200 transform hover:scale-105"
                 >
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                  Send Message
                 </button>
               </form>
             </div>

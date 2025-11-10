@@ -14,71 +14,48 @@ export async function POST(request: NextRequest) {
     }
 
     // Create email content
-    const emailSubject = `New Contact Form Submission from ${name}`;
-    const emailBody = `
-New contact form submission from Webs4U website:
+    const emailSubject = encodeURIComponent(`New Contact Form Submission from ${name}`);
+    const emailBody = encodeURIComponent(
+      `New contact form submission:\n\n` +
+      `Name: ${name}\n` +
+      `Email: ${email}\n` +
+      `Business Type: ${businessType || 'Not specified'}\n\n` +
+      `Message:\n${message}\n\n` +
+      `---\n` +
+      `This message was sent from the Webs4U contact form.`
+    );
 
-Name: ${name}
-Email: ${email}
-Business Type: ${businessType || 'Not specified'}
-
-Message:
-${message}
-
----
-This message was sent from the Webs4U contact form.
-Reply directly to: ${email}
-    `.trim();
-
-    // Send email using Web3Forms (free and easy)
-    // Get your free access key from https://web3forms.com
-    const accessKey = process.env.WEB3FORMS_ACCESS_KEY;
+    // For now, we'll return a mailto link
+    // In production, you can integrate with an email service like:
+    // - SendGrid
+    // - Resend
+    // - Nodemailer with SMTP
+    // - AWS SES
     
-    if (!accessKey || accessKey === 'YOUR_WEB3FORMS_ACCESS_KEY') {
-      // If no access key is set, return error with instructions
-      console.error('Web3Forms access key not configured. Please set WEB3FORMS_ACCESS_KEY in your environment variables.');
-      return NextResponse.json(
-        { 
-          error: 'Email service not configured. Please contact the website administrator.',
-          setupRequired: true
-        },
-        { status: 500 }
-      );
-    }
+    // For immediate functionality, we'll use mailto
+    // The frontend will handle opening the mailto link
+    const mailtoLink = `mailto:prowebs4you@gmail.com?subject=${emailSubject}&body=${emailBody}`;
 
-    const web3formsResponse = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        access_key: accessKey,
-        subject: emailSubject,
-        from_name: name,
-        from_email: email,
-        message: emailBody,
-        to_email: 'prowebs4you@gmail.com',
-      }),
-    });
-
-    const web3formsData = await web3formsResponse.json();
-
-    if (!web3formsResponse.ok || !web3formsData.success) {
-      console.error('Web3Forms error:', web3formsData);
-      throw new Error('Failed to send email via Web3Forms');
-    }
+    // In a production environment, you would send the email here using an email service
+    // Example with a service:
+    // await sendEmail({
+    //   to: 'prowebs4you@gmail.com',
+    //   subject: `New Contact Form Submission from ${name}`,
+    //   body: emailBody
+    // });
 
     return NextResponse.json(
       { 
         success: true,
-        message: 'Your message has been sent successfully! We will get back to you within 24 hours.'
+        mailtoLink: mailtoLink,
+        message: 'Form submitted successfully'
       },
       { status: 200 }
     );
   } catch (error) {
     console.error('Error processing contact form:', error);
     return NextResponse.json(
-      { error: 'Failed to send message. Please try again later or contact us directly at prowebs4you@gmail.com' },
+      { error: 'Failed to process form submission' },
       { status: 500 }
     );
   }
