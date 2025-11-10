@@ -63,6 +63,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/hosting" className="text-gray-300 hover:text-[#F4C542] transition-colors duration-200">
+                  Hosting
+                </Link>
+              </li>
+              <li>
                 <Link href="/pricing" className="text-gray-300 hover:text-[#F4C542] transition-colors duration-200">
                   Pricing
                 </Link>

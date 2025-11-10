@@ -54,18 +54,63 @@ export default function Home() {
     // Form Submission
     const contactForm = document.getElementById('contactForm') as HTMLFormElement;
     if (contactForm) {
-      contactForm.addEventListener('submit', (e) => {
+      contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const formData = new FormData(contactForm);
         const data = Object.fromEntries(formData);
         
-        alert('Thank you for your message! We will get back to you within 24 hours.\n\n' +
+        try {
+          const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name: data.name,
+              email: data.email,
+              businessType: data.service,
+              message: `Service Needed: ${data.service}\nBudget: ${data.budget}\n\n${data.message || 'No additional message provided.'}`,
+            }),
+          });
+
+          const result = await response.json();
+
+          if (response.ok && result.success) {
+            // Open mailto link to send email
+            if (result.mailtoLink) {
+              window.location.href = result.mailtoLink;
+            }
+            alert('Thank you for your message! Your email client will open to send the message. We will get back to you within 24 hours.');
+            contactForm.reset();
+          } else {
+            // Fallback to mailto if API fails
+            const emailSubject = encodeURIComponent(`New Contact Form Submission from ${data.name}`);
+            const emailBody = encodeURIComponent(
+              `New contact form submission:\n\n` +
               `Name: ${data.name}\n` +
               `Email: ${data.email}\n` +
               `Service: ${data.service}\n` +
-              `Budget: ${data.budget}`);
-        
-        contactForm.reset();
+              `Budget: ${data.budget}\n\n` +
+              `Message:\n${data.message || 'No additional message provided.'}`
+            );
+            window.location.href = `mailto:prowebs4you@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+            contactForm.reset();
+          }
+        } catch (error) {
+          console.error('Error submitting form:', error);
+          // Fallback to mailto
+          const emailSubject = encodeURIComponent(`New Contact Form Submission from ${data.name}`);
+          const emailBody = encodeURIComponent(
+            `New contact form submission:\n\n` +
+            `Name: ${data.name}\n` +
+            `Email: ${data.email}\n` +
+            `Service: ${data.service}\n` +
+            `Budget: ${data.budget}\n\n` +
+            `Message:\n${data.message || 'No additional message provided.'}`
+          );
+          window.location.href = `mailto:prowebs4you@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+          contactForm.reset();
+        }
       });
     }
 
@@ -196,17 +241,6 @@ export default function Home() {
                 </div>
               </div>
               <div className="portfolio-info">
-                <h3>Modern Business Website</h3>
-                <p>Corporate website with custom CMS</p>
-              </div>
-            </div>
-            <div className="portfolio-item">
-              <div className="portfolio-image">
-                <div className="portfolio-overlay">
-                  <a href="https://github.com/MoAmanjee" target="_blank" rel="noopener noreferrer" className="portfolio-link">View Project →</a>
-                </div>
-              </div>
-              <div className="portfolio-info">
                 <h3>E-Commerce Store</h3>
                 <p>Full-featured online shopping platform</p>
               </div>
@@ -218,30 +252,8 @@ export default function Home() {
                 </div>
               </div>
               <div className="portfolio-info">
-                <h3>Restaurant Website</h3>
-                <p>Menu, reservations, and online ordering</p>
-              </div>
-            </div>
-            <div className="portfolio-item">
-              <div className="portfolio-image">
-                <div className="portfolio-overlay">
-                  <a href="https://github.com/MoAmanjee" target="_blank" rel="noopener noreferrer" className="portfolio-link">View Project →</a>
-                </div>
-              </div>
-              <div className="portfolio-info">
                 <h3>Portfolio Website</h3>
                 <p>Creative showcase for artists</p>
-              </div>
-            </div>
-            <div className="portfolio-item">
-              <div className="portfolio-image">
-                <div className="portfolio-overlay">
-                  <a href="https://github.com/MoAmanjee" target="_blank" rel="noopener noreferrer" className="portfolio-link">View Project →</a>
-                </div>
-              </div>
-              <div className="portfolio-info">
-                <h3>Blog Platform</h3>
-                <p>Content management and publishing</p>
               </div>
             </div>
             <div className="portfolio-item">

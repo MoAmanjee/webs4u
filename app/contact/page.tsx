@@ -18,15 +18,51 @@ export default function Contact() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Log form submission (in production, this would send to a backend)
-    console.log('Form submitted:', formData);
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: '', email: '', businessType: '', message: '' });
-    }, 3000);
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        // Open mailto link to send email
+        if (data.mailtoLink) {
+          window.location.href = data.mailtoLink;
+        }
+        setSubmitted(true);
+        setTimeout(() => {
+          setSubmitted(false);
+          setFormData({ name: '', email: '', businessType: '', message: '' });
+        }, 5000);
+      } else {
+        alert('Failed to send message. Please try again or email us directly at prowebs4you@gmail.com');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      // Fallback to mailto if API fails
+      const emailSubject = encodeURIComponent(`New Contact Form Submission from ${formData.name}`);
+      const emailBody = encodeURIComponent(
+        `New contact form submission:\n\n` +
+        `Name: ${formData.name}\n` +
+        `Email: ${formData.email}\n` +
+        `Business Type: ${formData.businessType || 'Not specified'}\n\n` +
+        `Message:\n${formData.message}`
+      );
+      window.location.href = `mailto:prowebs4you@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({ name: '', email: '', businessType: '', message: '' });
+      }, 5000);
+    }
   };
 
   const whatsappNumber = '0608270838'; // Primary WhatsApp number
